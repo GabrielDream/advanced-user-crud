@@ -1,0 +1,22 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "extends": "airbnb-base",
+  "plugins": ["import"],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": "off",
+    "comma-dangle": "off",
+    "no-underscore-dangle": "off",
+    "indent": ["error", "tab"],
+    "no-tabs": "off",
+    "max-len": ["error", { "code": 120 }],
+    "operator-linebreak": "off",
+    "function-paren-newline": "off"
+  }
+}
