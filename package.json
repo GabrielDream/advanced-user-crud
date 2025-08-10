@@ -4,7 +4,7 @@
   "description": "Advanced User CRUD with Custom Validation and Automated Testing\r + This project was built to showcase strong backend skills using:",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

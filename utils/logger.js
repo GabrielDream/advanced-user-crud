@@ -1,4 +1,4 @@
-//Script used to stylize messages and banners.
+// Script used to stylize messages and banners.
 
 const chalk = require('chalk');
 
@@ -22,7 +22,7 @@ const logWarn = (msg) => console.log(`${label.warn} - ${msg}`);
 const logError = (msg) => console.log(`${label.error} - ${msg}`);
 const logSuccess = (msg) => console.log(`${label.sucess} - ${msg}`);
 const logData = (data) => console.log(`${label.data} -`, data);
-const logTimestamp = (timestamp) => console.log(`${label.timestamp} -`, timestamp);
+const logTimeStamp = (timestamp) => console.log(`${label.timestamp} -`, timestamp);
 
 const logBanner = (msg, style = chalk.bgGreenBright.bold) => {
 	const line = '='.repeat(msg.length + 10);
@@ -37,5 +37,5 @@ module.exports = {
 	logBanner,
 	logSuccess,
 	logData,
-	logTimestamp
+	logTimeStamp
 };
