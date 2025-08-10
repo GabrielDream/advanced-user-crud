@@ -1,4 +1,4 @@
-// Sanitize function to handle and filter external input data
+// Utility function to sanitize and filter incoming external input data
 const AppError = require('../middlewares/AppError');
 
 function sanitizeUserInput(input) {
@@ -16,7 +16,7 @@ function sanitizeUserInput(input) {
 		return !isAllowed;
 	});
 
-	if (extraFields > 0) {
+	if (extraFields.length > 0) {
 		throw new AppError(
 			`EXTRA FIELDS ARE NOT ALLOWED: ${extraFields.join('. ')}`,
 			400,
@@ -27,3 +27,5 @@ function sanitizeUserInput(input) {
 
 	return sanitized;
 }
+
+module.exports = sanitizeUserInput;
