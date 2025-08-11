@@ -24,6 +24,7 @@ const { MONGO_URL } = process.env;
 
 // Global middlewares
 app.use(cors());
+app.use(express.static('public'));
 app.use(express.json());
 app.use(successHandler); // adds res.success()
 
