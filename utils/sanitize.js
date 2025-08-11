@@ -18,7 +18,7 @@ function sanitizeUserInput(input) {
 
 	if (extraFields.length > 0) {
 		throw new AppError(
-			`EXTRA FIELDS ARE NOT ALLOWED: ${extraFields.join('. ')}`,
+			`EXTRA FIELDS ARE NOT ALLOWED: ${extraFields.join(', ')}`,
 			400,
 			'body',
 			'ERR_EXTRA_FIELDS'

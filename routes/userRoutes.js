@@ -1,5 +1,5 @@
 const express = require('express');
-const moongose = require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const router = express.Router();
@@ -15,16 +15,16 @@ const {
 	logData,
 	logTimeStamp
 } = require('../utils/logger');
-const sanitizeFunction = require('../utils/sanitize');
+const sanitizeUserInput = require('../utils/sanitize');
 const AppError = require('../middlewares/AppError');
-const { default: mongoose } = require('mongoose');
+
 
 // -------------------------
 // REGISTER USER
 // -------------------------
 router.post('/register', async (req, res, next) => {
 	try {
-		const sanitizedBody = sanitizeFunction(req.body);
+		const sanitizedBody = sanitizeUserInput(req.body);
 
 		let { name, age, email, password } = sanitizedBody;
 		email = String(email || '').trim().toLowerCase();
@@ -231,9 +231,30 @@ router.delete("/deleteUser/:id", async (req, res, next) => {
 router.put("/updateUser/:id", async (req, res, next) => {
 	try {
 		logDebug("♻️ UPDATE FUNCTION CALLED!");
-
 		const { id } = req.params;
 
+		// 1) Validate ID format first
+		if (!mongoose.Types.ObjectId.isValid(id)) {
+			logWarn("UPDATE FUNCTION: INVALID ID FORMAT!");
+			throw new AppError(
+				"UPDATE FUNCTION: INVALID USER ID FORMAT!",
+				400,
+				"id",
+				"ERR_INVALID_ID"
+			);
+		}
+
+		// 2) Find user before checking body emptiness
+		const user = await User.findById(id);
+		if (!user) {
+			logWarn("USER NOT FOUND!");
+			throw new AppError(
+				"UPDATE FUNCTION : USER NOT FOUND",
+				404,
+				"id",
+				"ERR_USER_NOT_FOUND"
+			);
+		}
 		const sanitizedBody = sanitizeUserInput(req.body);
 		let { name, age, email, password } = sanitizedBody;
 
@@ -260,6 +281,7 @@ router.put("/updateUser/:id", async (req, res, next) => {
 			sanitizedBody.email = normalizedEmail;
 			email = normalizedEmail;
 		}
+
 		if (age !== undefined) {
 			if (age === "") {
 				logWarn("UPDATE FUNCTION: INVALID AGE!");
@@ -276,17 +298,6 @@ router.put("/updateUser/:id", async (req, res, next) => {
 
 		logInfo(`♻️ UPDATE REQUEST FOR ID: ${id}`);
 		logInfo("📥 SANITIZED BODY:", sanitizedBody);
-
-		const user = await User.findById(id);
-		if (!user) {
-			logWarn("USER NOT FOUND!");
-			throw new AppError(
-				"UPDATE FUNCTION : USER NOT FOUND",
-				404,
-				"id",
-				"ERR_USER_NOT_FOUND"
-			);
-		}
 
 		let hasChange = false;
 
@@ -394,6 +405,5 @@ router.put("/updateUser/:id", async (req, res, next) => {
 		);
 	}
 });
-
 
 module.exports = router;

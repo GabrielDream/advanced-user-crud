@@ -30,5 +30,6 @@ const animateBox = async (text, lineDelay = 200, style = chalk.cyanBright) => {
 module.exports = {
 	beep,
 	emergency,
-	animateBox
+	animateBox,
+	delay
 };

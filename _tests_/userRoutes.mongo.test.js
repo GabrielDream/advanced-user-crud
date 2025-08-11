@@ -400,4 +400,222 @@ describe('User Routes', () => {
 		});
 	});
 
+	describe("PUT /api/put", () => {
+		let user;
+		let userId;
+
+		beforeEach(async () => {
+			user = await User.create({
+				name: "Example",
+				age: 30,
+				email: "example@example.com",
+				password: "Password@1234",
+			});
+			userId = user._id;
+		});
+
+		describe("✅ SUCCESS CASES: ", () => {
+			it("✅ should update users with valid datas:", async () => {
+				const newPassword = "Password@skq!!#";
+
+				const res = await request(app)
+					.put(`/api/updateUser/${userId}`)
+					.send({
+						name: "Sam",
+						age: 23,
+						email: "example@example.com",
+						password: newPassword,
+					});
+
+				expect(res.statusCode).toBe(200);
+				expect(res.body.message).toBe("SUCCESSFULY UPDATED!");
+
+				// Buscar usuário atualizado direto no banco
+				const updatedUser = await User.findById(userId);
+
+				// Conferir se o nome, idade e email foram atualizados corretamente
+				expect(updatedUser.name).toBe("Sam");
+				expect(updatedUser.age).toBe(23);
+				expect(updatedUser.email).toBe("example@example.com");
+
+				// Validar se a senha foi realmente atualizada (hash bate com senha nova)
+				const isPasswordValid = await bcrypt.compare(
+					newPassword,
+					updatedUser.password
+				);
+				expect(isPasswordValid).toBe(true);
+			});
+
+			it("✅ should persist the update in the database", async () => {
+				const newName = "PersistentName";
+
+				await request(app).put(`/api/updateUser/${user._id}`).send({
+					name: newName,
+				});
+
+				const updateUser = await User.findById(user._id);
+
+				expect(updateUser.name).toBe(newName);
+			});
+		});
+
+		describe("❌ ERROR CASES: ", () => {
+			it("❌ should return 404 if user is not found", async () => {
+				const unsavedId = new mongoose.Types.ObjectId();
+
+				const res = await request(app)
+					.put(`/api/updateUser/${unsavedId}`)
+					.send({
+						/*Empty body*/
+					});
+
+				console.log("Status Code:", res.statusCode);
+				console.log("Response Body:", res.body);
+
+				expect(res.statusCode).toBe(404);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe(
+					"UPDATE FUNCTION : USER NOT FOUND"
+				);
+			});
+
+			it("❌ should return 404 if all fiels are empty", async () => {
+				const res = await request(app)
+					.put(`/api/updateUser/${user._id}`)
+					.send({
+						/*Empty body*/
+					});
+
+				expect(res.statusCode).toBe(404);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe(
+					"UPDATE FUNCTION : AT LEAST ONE FIELD NEED TO BE FILLED!"
+				);
+			});
+
+			it("should return an error if extra fields are provided", async () => {
+				const res = await request(app)
+					.put(`/api/updateUser/${userId}`)
+					.send({
+						name: "John",
+						age: 28,
+						role: "admin", // 👈 Extra field not allowed
+					});
+
+				expect(res.statusCode).toBe(400);
+				expect(res.body).toHaveProperty("code", "ERR_EXTRA_FIELDS");
+				expect(res.body.message).toMatch(/^EXTRA FIELDS ARE NOT ALLOWED:/i);
+			});
+
+			it("❌ should return 400 if ID is invalid/malformed", async () => {
+				const res = await request(app)
+					.put(`/api/updateUser/invalidId`)
+					.send({});
+
+				expect(res.statusCode).toBe(400);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe(
+					"UPDATE FUNCTION: INVALID USER ID FORMAT!"
+				);
+			});
+
+			it("❌ should return 400 if it is an invalid age (non-number)", async () => {
+				const res = await request(app)
+					.put(`/api/updateUser/${user._id}`)
+					.send({
+						name: "Example",
+						age: "asg",
+						email: "example@example.com",
+						password: "Password@1234",
+					});
+
+				expect(res.statusCode).toBe(400);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe("UPDATE FUNCTION: INVALID AGE!");
+			});
+
+			it("❌ should return 400 if age ir an empty string", async () => {
+				const res = await request(app)
+					.put(`/api/updateUser/${user._id}`)
+					.send({
+						age: "",
+					});
+
+				expect(res.statusCode).toBe(400);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe("UPDATE FUNCTION: INVALID AGE!");
+			});
+
+			it("❌ should return 400 if email is in use", async () => {
+				const userWithSameEmail = await User.create({
+					name: "Example",
+					age: 30,
+					email: "example1@example.com",
+					password: "Password@1234",
+				});
+
+				const userWithSameEmailId = userWithSameEmail._id;
+
+				const res = await request(app)
+					.put(`/api/updateUser/${userWithSameEmailId}`)
+					.send({
+						email: "example@example.com",
+					});
+
+				expect(res.statusCode).toBe(400);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe(
+					"UPDATE FUNCTION: EMAIL IS ALREADY IN USE!"
+				);
+			});
+
+			it("❌ should return 400 if the passoword is invalid", async () => {
+				const res = await request(app)
+					.put(`/api/updateUser/${userId}`)
+					.send({
+						password: "password", //to weak
+					});
+
+				expect(res.statusCode).toBe(400);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe(
+					"UPDATE FUNCTION: INVALID PASSWORD!"
+				);
+			});
+
+			it("❌ should return 400 if nothing has change", async () => {
+				const res = await request(app)
+					.put(`/api/updateUser/${userId}`)
+					.send({
+						name: "Example",
+						age: 30,
+						email: "example@example.com",
+						password: "Password@1234",
+					});
+
+				expect(res.statusCode).toBe(400);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe(
+					"UPDATE FUNCTION: ANYTHING HAS CHANGED!"
+				);
+			});
+
+			it("❌ should return 500 if an unexpected server error occurs", async () => {
+				jest.spyOn(User, "findById").mockImplementation(() => {
+					throw new Error("DB Error");
+				});
+				const res = await request(app)
+					.put(`/api/updateUser/${userId}`)
+					.send({
+						name: "Whatever",
+					});
+
+				expect(res.statusCode).toBe(500);
+				expect(res.body.success).toBe(false);
+				expect(res.body.message).toBe(
+					"UPDATE FUNCTION: INTERNAL SERVER ERROR!"
+				);
+			});
+		});
+	});
 });
