@@ -1,5 +1,5 @@
 // ==== CONFIG ====
-var BASE_URL = "http://localhost:3051";
+const BASE_URL = `${window.location.origin}/api`;
 
 // -------------------------
 // CHECK EMAIL
