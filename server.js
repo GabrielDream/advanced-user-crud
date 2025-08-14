@@ -1,122 +1,95 @@
 // Main server script
-require('dotenv').config();
+require("dotenv").config();
 
-// Default imports
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+// Default imports:
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
+
+// ✅ Unified DB connector (decides local vs Atlas via .env)
+const { connectDB } = require("./config/db");
 
 const app = express();
 
 // Middlewares & utilities
-const successHandler = require('./middlewares/successHandler');
-const errorHandler = require('./middlewares/errorHandler');
-const { logInfo, logError, logBanner } = require('./utils/logger');
-const { delay, beep, animateBox } = require('./utils/spyConsole');
+const successHandler = require("./middlewares/successHandler");
+const errorHandler = require("./middlewares/errorHandler");
+const { logInfo, logError, logBanner } = require("./utils/logger");
+const { delay, beep, animateBox } = require("./utils/spyConsole");
 
 // Routes
-const userRoutes = require('./routes/userRoutes');
-const emailCheckRoutes = require('./routes/emailCheckRoutes');
+const userRoutes = require("./routes/userRoutes");
+const emailCheckRoutes = require("./routes/emailCheckRoutes");
 
-// ---------- App config ----------
+// App config
 const PORT = process.env.PORT || 3051;
-const { MONGO_URL } = process.env;
 
-
-const PUBLIC_URL = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
-const API_BASE = `${PUBLIC_URL}/api`;
-
-// Confia no proxy (útil em plataformas PaaS)
-app.set('trust proxy', 1);
-
-// ---------- Global middlewares ----------
-const corsOrigin = process.env.CORS_ORIGIN || process.env.RENDER_EXTERNAL_URL || '*';
-app.use(cors({ origin: corsOrigin }));
-
+// Global middlewares
+app.use(cors());
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
+app.use(successHandler); // adds res.success()
 
-// Servir frontend estático (pasta /public)
-app.use(express.static('public'));
+// Mount routes under the same /api prefix
+app.use("/api", userRoutes);
+app.use("/api", emailCheckRoutes);
 
-// Sucesso custom middleware (adiciona res.success)
-app.use(successHandler);
-
-// ---------- Healthcheck ----------
-app.get('/health', (_req, res) => {
-  res.json({
-    ok: true,
-    env: process.env.NODE_ENV || 'development',
-    publicUrl: PUBLIC_URL,
-    apiBase: API_BASE,
-    time: new Date().toISOString(),
-  });
-});
-
-// ---------- API routes ----------
-app.use('/api', userRoutes);
-app.use('/api', emailCheckRoutes);
-
-// Error middleware por último
+// Error middleware must be last
 app.use(errorHandler);
 
-// Unhandled rejections -> loga e encerra
-process.on('unhandledRejection', (err) => {
-  logError('❌ Unhandled Rejection detected:');
+// Catch unhandled promise rejections
+process.on("unhandledRejection", (err) => {
+  logError("❌ Unhandled Rejection detected:");
   console.error(err);
   process.exit(1);
 });
 
-// ---------- DB connection & bootstrap ----------
-mongoose.set('strictQuery', false);
-
-mongoose
-  .connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(async () => {
-    logInfo('✅ Connected to MongoDB');
+// DB connection and server bootstrap
+(async () => {
+  try {
+    await connectDB();
+    logInfo("✅ Connected to MongoDB");
     await beep();
 
-    // Pequena “animação” (mantida) — mas sem limpar logs no Render
     await delay(300);
-    await beep('🔍 Verifying systems...');
+    await beep("🔍 Verifying systems...");
     await delay(600);
-    logInfo('Database verified!');
+    logInfo("Database verified!");
 
     await delay(600);
-    await beep('💾 Initializing auth modules...');
+    await beep("💾 Initializing auth modules...");
     await delay(600);
-    logInfo('Modules ready.');
+    logInfo("Modules ready.");
 
     await delay(500);
-    await beep('🛡️  Security protocols enabled.');
+    await beep("🛡️  Security protocols enabled.");
     await delay(600);
-    logInfo('Realtime monitoring enabled.');
+    logInfo("Realtime monitoring enabled.");
 
-    // Evita sumir com logs no Render
+    // Keep console clear only when running locally
     if (!process.env.RENDER_EXTERNAL_URL) {
+      await delay(800);
       console.clear();
     }
 
     const banner = `
-╔══════════════════════════════════════════════════════════╗
+╔══════════════════════════════════════════════╗
 ║  🕵️  NEUROCODING PROJECT - ACTIVE AND OPERANT
-╠══════════════════════════════════════════════════════════╣
+╠══════════════════════════════════════════════╣
 ║  📡 PORT: ${PORT}
-║  🌐 PUBLIC URL: ${PUBLIC_URL}
-║  🌐 API Base: ${API_BASE}
+║  🌐 API Base: http://localhost:${PORT}/api
 ║  ✅ Status: Operational and monitored
-╚══════════════════════════════════════════════════════════╝
-`;
+╚══════════════════════════════════════════════╝
+    `;
     await animateBox(banner, 150);
-    logBanner('NEUROCODING ONLINE');
+    logBanner("NEUROCODING ONLINE");
 
     app.listen(PORT, () => {
-      logInfo(`🚀 Server running at ${PUBLIC_URL}`);
+      logInfo(`🚀 Server running on http://localhost:${PORT}`);
     });
-  })
-  .catch((err) => {
-    logError('❌ Failed to connect to MongoDB!');
+  } catch (err) {
+    logError("❌ Failed to connect to MongoDB on startup!");
     console.error(err);
-  });
+    process.exit(1);
+  }
+})();
