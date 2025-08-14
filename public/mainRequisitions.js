@@ -1,11 +1,11 @@
 // ==== CONFIG ====
-const BASE_URL = `${window.location.origin}/api`;
+//const BASE_URL = "/api";
 
 // -------------------------
 // CHECK EMAIL
 // -------------------------
 async function checkEmailExists(email) {
-  const data = await safeFetch(BASE_URL + "/api/checkEmail/" + encodeURIComponent(email), {}, {
+  const data = await safeFetch("/api/checkEmail/" + encodeURIComponent(email), {}, {
     showLoading: false,
     onError: function () { console.warn("Failed to check email."); }
   });
@@ -40,7 +40,7 @@ async function registerUser(event) {
   var emailExists = await checkEmailExists(email);
   if (emailExists) return alert("EMAIL IS ALREADY IN USE!");
 
-  await safeFetch(BASE_URL + "/api/register", {
+  await safeFetch("/api/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: name, age: ageNumber, email: email, password: password })
@@ -63,7 +63,7 @@ async function registerUser(event) {
 // LIST
 // -------------------------
 async function userList () {
-  const resp = await safeFetch(BASE_URL + "/api/checkUsers", {}, {
+  const resp = await safeFetch("/api/checkUsers", {}, {
     showLoading: false,
     wantAlert: false,
     onError: function () { console.warn("FAILED TO LOAD USERS!"); }
@@ -108,7 +108,7 @@ async function userList () {
 async function deleteUser(id) {
   if (!confirm("DELETE THIS?")) return;
 
-  await safeFetch(BASE_URL + "/api/deleteUser/" + encodeURIComponent(id), { method: 'DELETE' }, {
+  await safeFetch("/api/deleteUser/" + encodeURIComponent(id), { method: 'DELETE' }, {
     onSuccess: function (data) {
       alert(data && data.message ? data.message : "USER DELETED!");
       userList();
@@ -124,7 +124,7 @@ async function deleteUser(id) {
 // DELETE BY ID
 // -----------------------
 // -----------------------
-// DELETE BY ID (usa a rota existente /deleteUser/:id)
+// DELETE BY ID
 // -----------------------
 async function deleteById() {
   var idInput = document.getElementById("deleteById").value.trim();
@@ -136,7 +136,7 @@ async function deleteById() {
 
   if (!confirm("DELETE USER WITH ID " + idInput + "?")) return;
 
-  await safeFetch(BASE_URL + "/api/deleteUser/" + encodeURIComponent(idInput), {
+  await safeFetch("/api/deleteUser/" + encodeURIComponent(idInput), {
     method: 'DELETE'
   }, {
     onSuccess: function (data) {
@@ -273,7 +273,7 @@ async function updateUser(usersId, currentName, currentAge, currentEmail) {
     }
 
     try {
-      await safeFetch(BASE_URL + "/api/updateUser/" + encodeURIComponent(usersId), {
+      await safeFetch("/api/updateUser/" + encodeURIComponent(usersId), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateData)
