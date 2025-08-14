@@ -39,40 +39,58 @@ app.use(errorHandler);
 
 // Catch unhandled promise rejections
 process.on("unhandledRejection", (err) => {
-  logError("❌ Unhandled Rejection detected:");
-  console.error(err);
-  process.exit(1);
+	logError("❌ Unhandled Rejection detected:");
+	console.error(err);
+	process.exit(1);
 });
+
+
 
 // DB connection and server bootstrap
 (async () => {
-  try {
-    await connectDB();
-    logInfo("✅ Connected to MongoDB");
-    await beep();
+	try {
 
-    await delay(300);
-    await beep("🔍 Verifying systems...");
-    await delay(600);
-    logInfo("Database verified!");
 
-    await delay(600);
-    await beep("💾 Initializing auth modules...");
-    await delay(600);
-    logInfo("Modules ready.");
+		// --- SNAPSHOT DE AMBIENTE (não vaza segredo) ---
+		const visible = Object.fromEntries(
+			Object.entries(process.env)
+				.filter(([k]) => /USE_LOCAL_DB|ATLAS_MONGO_URI|MONGO_URL|MONGODB_URI|DATABASE_URL|NODE_ENV/i.test(k))
+				.map(([k, v]) => [k, k.includes("MONGO") ? "(set)" : v])
+		);
+		console.log("🔎 ENV SNAPSHOT:", visible);
+		// -----------------------------------------------
+		(function envSnapshot() {
+			const keys = ["USE_LOCAL_DB", "ATLAS_MONGO_URI", "MONGO_URL", "MONGODB_URI", "DATABASE_URL", "NODE_ENV"];
+			const out = Object.fromEntries(keys.map(k => [k, process.env[k] ? (k.includes("MONGO") ? "(set)" : process.env[k]) : "(missing)"]));
+			console.log("🔎 ENV SNAPSHOT:", out);
+		})();
 
-    await delay(500);
-    await beep("🛡️  Security protocols enabled.");
-    await delay(600);
-    logInfo("Realtime monitoring enabled.");
+		await connectDB();
+		logInfo("✅ Connected to MongoDB");
+		await beep();
 
-    // Keep console clear only when running locally
-    if (!process.env.RENDER_EXTERNAL_URL) {
-      await delay(800);
-      console.clear();
-    }
+		await delay(300);
+		await beep("🔍 Verifying systems...");
+		await delay(600);
+		logInfo("Database verified!");
 
-    const banner = `
+		await delay(600);
+		await beep("💾 Initializing auth modules...");
+		await delay(600);
+		logInfo("Modules ready.");
+
+		await delay(500);
+		await beep("🛡️  Security protocols enabled.");
+		await delay(600);
+		logInfo("Realtime monitoring enabled.");
+
+		// Keep console clear only when running locally
+		if (!process.env.RENDER_EXTERNAL_URL) {
+			await delay(800);
+			console.clear();
+		}
+
+		const banner = `
 ╔══════════════════════════════════════════════╗
 ║  🕵️  NEUROCODING PROJECT - ACTIVE AND OPERANT
 ╠══════════════════════════════════════════════╣
@@ -81,15 +99,15 @@ process.on("unhandledRejection", (err) => {
 ║  ✅ Status: Operational and monitored
 ╚══════════════════════════════════════════════╝
     `;
-    await animateBox(banner, 150);
-    logBanner("NEUROCODING ONLINE");
+		await animateBox(banner, 150);
+		logBanner("NEUROCODING ONLINE");
 
-    app.listen(PORT, () => {
-      logInfo(`🚀 Server running on http://localhost:${PORT}`);
-    });
-  } catch (err) {
-    logError("❌ Failed to connect to MongoDB on startup!");
-    console.error(err);
-    process.exit(1);
-  }
+		app.listen(PORT, () => {
+			logInfo(`🚀 Server running on http://localhost:${PORT}`);
+		});
+	} catch (err) {
+		logError("❌ Failed to connect to MongoDB on startup!");
+		console.error(err);
+		process.exit(1);
+	}
 })();
