@@ -1,3 +1,4 @@
+"This is the frontend interface for the Advanced CRUD API project. Backend repository:
 + Advanced User CRUD with Custom Validation and Automated Testing - Frontend Interface (Vanilla HTML/CSS/JS)
 	This project is the frontend layer for the Advanced User CRUD API, built to demonstrate clean, framework-free UI development with client-side validation and robust API consumption.
 
@@ -213,19 +214,13 @@
 	Удаление по ID: Проверка формата ObjectId перед запросом
 
 	📂 Структура проекта
-	bash
-	Copiar
-	Editar
-	frontend/
+	public/
 	├─ index.html             # Основной макет
 	├─ style.css              # Тёмная тема, адаптивность, анимации модального окна
 	├─ fetch.js               # Безопасный fetch + парсинг JSON + ошибки
 	├─ validation.js          # Функции валидации на клиенте
 	└─ mainRequisitions.js    # CRUD-запросы + интеграция с DOM
 	▶️ Как запустить
-	bash
-	Copiar
-	Editar
 	# 1. Клонировать репозиторий
 	git clone https://github.com/ваш-юзер/ваш-frontend-репо.git
 

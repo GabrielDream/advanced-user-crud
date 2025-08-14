@@ -105,6 +105,8 @@
 
 	Pull requests, forks and feedback are welcome. OSSS 💻🔥
 
+	The frontend README is available in /public/README.md.
+
 + 🇧🇷 CRUD de Usuário Avançado com Validação Customizada e Testes Automatizados
 	Este projeto foi construído para demonstrar fortes habilidades em backend utilizando:
 
