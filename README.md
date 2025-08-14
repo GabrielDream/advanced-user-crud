@@ -1,316 +1,296 @@
-Advanced User CRUD with Custom Validation and Automated Testing
-+ This project was built to showcase strong backend skills using:
++ Advanced User CRUD with Custom Validation and Automated Testing
+	This project was built to showcase strong backend skills using:
 
-    Clean code and modular structure;
+	Clean code and modular structure
 
-    Manual, rule-driven validation (Joi intentionally not used);
+	Manual, rule-driven validation (Joi intentionally not used)
 
-    Custom error handling using AppError and specialized middlewares;
+	Custom error handling using AppError and specialized middlewares
 
-    Full test coverage using Jest + Supertest;
+	Full test coverage using Jest + Supertest
 
-    Solid tech stack: Node.js + Express + MongoDB (Mongoose).
+	Solid tech stack: Node.js + Express + MongoDB (Mongoose)
 
-    📦 Technologies and Tools Used
-        Node.js
+	📦 Technologies and Tools Used
+	Node.js
 
-        Express
+	Express
 
-        MongoDB + Mongoose
+	MongoDB + Mongoose
 
-        Custom Middlewares:
+	Custom Middlewares:
 
-        res.success
+	res.success
 
-        AppError class
+	AppError class
 
-        Global errorHandler
+	Global errorHandler
 
-        Advanced manual validations (Joi was intentionally not used)
+	Advanced manual validations (Joi was intentionally not used)
 
-        Jest + Supertest
+	Jest + Supertest
 
-        dotenv
+	dotenv
 
-        chalk (for styled logging)
+	chalk (for styled logging)
 
-        sanitizeUserInput (security utility)
+	sanitizeUserInput (security utility)
 
-        Postman (for manual tests and informal docs)
+	Postman (for manual tests and informal docs)
 
-        Linter
+	Linter
 
-        📂 API Routes (base path: /api)
-        Method	Route	Description
-        GET	/checkEmail/:email	Check if email is already in use
-        POST	/add	Register a new user with validation
-        GET	/checkUsers	List all users
-        DELETE	/deleteUser/:id	Delete user by ID
-        PUT	/updateUser/:id	Update user fields
+	📂 API Routes (base path: /api)
+	Method	Route	Description
+	GET	/checkEmail/:email	Check if email is already in use
+	POST	/add	Register a new user with validation
+	GET	/checkUsers	List all users
+	DELETE	/deleteUser/:id	Delete user by ID
+	PUT	/updateUser/:id	Update user fields
 
-        🧪 Automated Testing
-        All routes tested with Jest + Supertest
+	🧪 Automated Testing
+	All routes tested with Jest + Supertest.
+	Full coverage of success and error scenarios:
 
-        Full coverage of success + error scenarios:
+	Malformed ID
 
-        Malformed ID
+	Invalid inputs
 
-        Invalid inputs
+	Duplicate emails
 
-        Duplicate emails
+	No data change
 
-        No data change
+	Weak passwords
 
-        Weak passwords
+	Each test checks for specific messages, enforcing precise control.
 
-        Each test expects specific messages, enforcing precise control.
+	❗ Why Manual Validation Instead of Joi?
+	This project intentionally avoids Joi to demonstrate:
 
-        ❗ Why Manual Validation Instead of Joi?
-        This project intentionally avoids Joi to demonstrate:
+	Total control over logic, flow, and messaging
 
-        Total control over logic, flow, and messaging
+	Seamless integration with custom error structures (AppError)
 
-        Seamless integration with custom error structures (AppError)
+	Scenarios where external libraries are restricted (fintech, military, medical)
 
-        Scenarios where external libraries are restricted (fintech, military, medical)
+	Mastery of backend logic and defensive programming
 
-        Mastery of backend logic and defensive programming
+	“I know how to use Joi, but in this project I chose manual validation to guarantee full control over business rules and error flow.”
 
-        “I know how to use Joi, but in this project I chose manual validation to guarantee full control over business rules and error flow.”
+	▶️ How to Run This Project
+	bash
+	Copiar
+	Editar
+	# 1. Clone the repo
+	git clone https://github.com/your-user/your-repo.git
 
-    ▶️ How to Run This Project
-    bash
-    Copiar
-    Editar
-    # 1. Clone the repo
-    git clone https://github.com/your-user/your-repo.git
+	# 2. Install dependencies
+	npm install
 
-    # 2. Install dependencies
-    npm install
+	# 3. Configure environment variables
+	MONGO_URL=mongodb://localhost/AdvancedCrud
+	PORT=3051
 
-    # 3. Configure environment variables
-    MONGO_URL=mongodb://localhost:27017/neurocoding
+	# 4. Start the server
+	npm start
+	# Server: http://localhost:3051/api
+	🧠 Final Notes
+	This project represents a clean and professional backend focused on logic, testing, and security.
 
-    # 4. Start the server
-    npm start
-    Server: http://localhost:3050/api
+	“Validation isn’t just about accepting or rejecting input.
+	It’s about guiding, securing, and predicting behavior.”
 
-    🧠 Final Notes
-    This project represents a clean and professional backend focused on logic, testing, and security.
+	Explore the source code to understand the architecture:
+	AppError, res.success, spyConsole, logging animations, and more.
 
-    “Validation isn’t just about accepting or rejecting input.
-    It’s about guiding, securing, and predicting behavior.”
+	Pull requests, forks and feedback are welcome. OSSS 💻🔥
 
-    Explore the source code to understand the architecture:
-    AppError, res.success, spyConsole, logging animations, and more.
++ 🇧🇷 CRUD de Usuário Avançado com Validação Customizada e Testes Automatizados
+	Este projeto foi construído para demonstrar fortes habilidades em backend utilizando:
 
-    Pull requests, forks and feedback are welcome. OSSS 💻🔥
+	Código limpo e estrutura modular
 
-+ Other languages:
-    🇧🇷 CRUD de Usuário Avançado com Validação Customizada e Testes Automatizados
-    Este projeto foi construído para demonstrar fortes habilidades em backend utilizando:
+	Validação manual baseada em regras (Joi intencionalmente não utilizado)
 
-    Código limpo e estrutura modular;
+	Tratamento de erros customizado com AppError e middlewares personalizados
 
-    Validação manual baseada em regras (Joi intencionalmente não utilizado);
+	Cobertura total de testes com Jest + Supertest
 
-    Tratamento de erros customizado com AppError e middlewares personalizados;
+	Stack sólida com Node.js + Express + MongoDB (Mongoose)
 
-    Cobertura total de testes com Jest + Supertest;
+	📦 Tecnologias e Ferramentas Utilizadas
+	Node.js
 
-    Stack sólida com Node.js + Express + MongoDB (Mongoose).
+	Express
 
-    📦 Tecnologias e Ferramentas Utilizadas
-    Node.js
+	MongoDB + Mongoose
 
-    Express
+	Middlewares personalizados:
 
-    MongoDB + Mongoose
+	res.success
 
-    Middlewares personalizados:
+	Classe AppError
 
-    res.success
+	Middleware global errorHandler
 
-    Classe AppError
+	Validações manuais avançadas
 
-    Middleware global errorHandler
+	Testes com Jest + Supertest
 
-    Validações manuais avançadas
+	dotenv
 
-    Testes com Jest + Supertest
+	chalk (logs estilizados)
 
-    dotenv
+	sanitizeUserInput (utilitário de segurança)
 
-    chalk (logs estilizados)
+	Postman
 
-    sanitizeUserInput (utilitário de segurança)
+	📂 Rotas da API (base: /api)
+	Método	Rota	Descrição
+	GET	/checkEmail/:email	Verifica se o e-mail já está em uso
+	POST	/add	Cadastra novo usuário com validação
+	GET	/checkUsers	Lista todos os usuários
+	DELETE	/deleteUser/:id	Deleta usuário por ID
+	PUT	/updateUser/:id	Atualiza campos do usuário
 
-    Postman
+	🧪 Testes Automatizados
+	Todas as rotas testadas com Jest + Supertest.
+	Cobertura completa de erros e sucessos:
 
-    📂 Rotas da API (base: /api)
-    Método	Rota	Descrição
-    GET	/checkEmail/:email	Verifica se o e-mail já está em uso
-    POST	/add	Cadastra novo usuário com validação
-    GET	/checkUsers	Lista todos os usuários
-    DELETE	/deleteUser/:id	Deleta usuário por ID
-    PUT	/updateUser/:id	Atualiza campos do usuário
+	ID inválido
 
-    🧪 Testes Automatizados
-    Todas as rotas testadas com Jest + Supertest
+	Valores inválidos
 
-    Cobertura completa de erros e sucessos:
+	Campos extras
 
-    ID inválido
+	Senhas fracas
 
-    Valores inválidos
+	Nenhuma alteração detectada
 
-    Campos extras
+	Cada teste verifica mensagens específicas — garantindo precisão.
 
-    Senhas fracas
+	❗ Por que não usar Joi?
+	A escolha de não usar Joi neste projeto foi estratégica:
 
-    Nenhuma alteração detectada
+	Controle absoluto sobre lógica e mensagens
 
-    Cada teste verifica mensagens específicas — garantindo precisão.
+	Integração total com AppError
 
-    ❗ Por que não usar Joi?
-    A escolha de não usar Joi neste projeto foi estratégica:
+	Simulação de ambientes críticos (ex: fintechs, sistemas médicos, segurança)
 
-    Controle absoluto sobre lógica e mensagens
+	Demonstração de domínio técnico da validação backend
 
-    Integração total com AppError
+	“Eu sei usar o Joi, mas neste projeto escolhi a validação manual para garantir total controle sobre regras de negócio e mensagens de erro.”
 
-    Simulação de ambientes críticos (ex: fintechs, sistemas médicos, segurança)
+	▶️ Como Rodar o Projeto
+	bash
+	Copiar
+	Editar
+	# 1. Clone o repositório
+	git clone https://github.com/your-user/your-repo.git
 
-    Demonstração de domínio técnico da validação backend
+	# 2. Instale as dependências
+	npm install
 
-    “Eu sei usar o Joi, mas neste projeto escolhi a validação manual para garantir total controle sobre regras de negócio e mensagens de erro.”
+	# 3. Configure as variáveis de ambiente
+	MONGO_URL=mongodb://localhost/AdvancedCrud
+	PORT=3051
 
-    ▶️ Como Rodar o Projeto
-    bash
-    Copiar
-    Editar
-    # 1. Clone o repositório
-    git clone https://github.com/your-user/your-repo.git
+	# 4. Inicie o servidor
+	npm start
+	# Servidor: http://localhost:3051/api
 
-    # 2. Instale as dependências
-    npm install
++ 🇷🇺 Расширенный CRUD пользователей с пользовательской валидацией и тестированием
+	Этот проект создан для демонстрации навыков backend-разработки:
 
-    # 3. Configure as variáveis de ambiente
-    MONGO_URL=mongodb://localhost:27017/neurocoding
+	Чистый и модульный код
 
-    # 4. Inicie o servidor
-    npm start
-    Servidor: http://localhost:3050/api
+	Ручная валидация без использования Joi (осознанный выбор)
 
-    🧠 Notas Finais
-    Este projeto representa uma aplicação profissional, limpa e segura, focada em lógica, clareza e testes.
+	Пользовательская обработка ошибок (AppError, middleware)
 
-    “Validação não é só aceitar ou rejeitar input.
-    É guiar, proteger e prever comportamentos.”
+	Полное покрытие тестами: Jest + Supertest
 
-    Explore os arquivos para ver detalhes como AppError, animações com spyConsole, logs com chalk, e validações manuais.
+	Надёжный стек: Node.js + Express + MongoDB (Mongoose)
 
-    Pull requests, forks e feedback são bem-vindos. OSSSS!
+	📦 Используемые технологии
+	Node.js
 
-    🇷🇺 Расширенный CRUD пользователей с пользовательской валидацией и тестированием
-    Этот проект создан для демонстрации навыков backend-разработки:
+	Express
 
-    Чистый и модульный код
+	MongoDB + Mongoose
 
-    Ручная валидация без использования Joi (осознанный выбор)
+	Пользовательские Middleware:
 
-    Пользовательская обработка ошибок (AppError, middleware)
+	res.success
 
-    Полное покрытие тестами: Jest + Supertest
+	AppError
 
-    Надёжный стек: Node.js + Express + MongoDB (Mongoose)
+	errorHandler
 
-    📦 Используемые технологии
-    Node.js
+	Ручная валидация (без Joi)
 
-    Express
+	Jest + Supertest
 
-    MongoDB + Mongoose
+	dotenv
 
-    Пользовательские Middleware:
+	chalk
 
-    res.success
+	sanitizeUserInput
 
-    AppError
+	Postman
 
-    errorHandler
+	📂 API Маршруты (база: /api)
+	Метод	Роут	Описание
+	GET	/checkEmail/:email	Проверка существования email
+	POST	/add	Создание нового пользователя
+	GET	/checkUsers	Список всех пользователей
+	DELETE	/deleteUser/:id	Удаление по ID
+	PUT	/updateUser/:id	Обновление данных пользователя
 
-    Ручная валидация (без Joi)
+	🧪 Автотестирование
+	Все маршруты покрыты Jest + Supertest.
+	Полное покрытие ошибок и успехов:
 
-    Jest + Supertest
+	Неверный формат ID
 
-    dotenv
+	Дублирование email
 
-    chalk
+	Пустые поля
 
-    sanitizeUserInput
+	Слабые пароли
 
-    Postman
+	Отсутствие изменений
 
-    📂 API Маршруты (база: /api)
-    Метод	Роут	Описание
-    GET	/checkEmail/:email	Проверка существования email
-    POST	/add	Создание нового пользователя
-    GET	/checkUsers	Список всех пользователей
-    DELETE	/deleteUser/:id	Удаление по ID
-    PUT	/updateUser/:id	Обновление данных пользователя
+	Каждое сообщение точно проверяется.
 
-    🧪 Автотестирование
-    Все маршруты покрыты Jest + Supertest
+	❗ Почему не Joi?
+	Проект осознанно не использует Joi:
 
-    Полное покрытие ошибок и успехов:
+	Полный контроль логики и ошибок
 
-    Неверный формат ID
+	Интеграция с AppError и кастомной архитектурой
 
-    Дублирование email
+	Имитация сред с повышенной безопасностью (банковские, военные, медицинские)
 
-    Пустые поля
+	Показ глубокого понимания backend-валидации
 
-    Слабые пароли
+	“Я умею пользоваться Joi, но в этом проекте выбрал ручную валидацию для абсолютного контроля над логикой.”
 
-    Отсутствие изменений
+	▶️ Как запустить проект
+	bash
+	Copiar
+	Editar
+	# 1. Клонировать репозиторий
+	git clone https://github.com/your-user/your-repo.git
 
-    Каждое сообщение точно проверяется
+	# 2. Установить зависимости
+	npm install
 
-    ❗ Почему не Joi?
-    Проект осознанно не использует Joi:
+	# 3. Настроить переменные окружения
+	MONGO_URL=mongodb://localhost/AdvancedCrud
+	PORT=3051
 
-    Полный контроль логики и ошибок
-
-    Интеграция с AppError и кастомной архитектурой
-
-    Имитация сред с повышенной безопасностью (банковские, военные, медицинские)
-
-    Показ глубокого понимания backend-валидации
-
-    “Я умею пользоваться Joi, но в этом проекте выбрал ручную валидацию для абсолютного контроля над логикой.”
-
-    ▶️ Как запустить проект
-    bash
-    Copiar
-    Editar
-    # 1. Клонировать репозиторий
-    git clone https://github.com/your-user/your-repo.git
-
-    # 2. Установить зависимости
-    npm install
-
-    # 3. Настроить переменные окружения
-    MONGO_URL=mongodb://localhost:27017/neurocoding
-
-    # 4. Запустить сервер
-    npm start
-    Сервер: http://localhost:3050/api
-
-    🧠 Финальные замечания
-    Это профессиональное backend-приложение, ориентированное на ясность, тестируемость и защиту.
-
-    “Валидация — это не только про допустимость ввода.
-    Это про контроль, безопасность и предсказуемость поведения.”
-
-    Исследуйте проект — особенно AppError, res.success, консольные анимации и кастомную валидацию.
+	# 4. Запустить сервер
+	npm start
+	# Сервер: http://localhost:3051/api

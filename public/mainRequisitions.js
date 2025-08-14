@@ -123,15 +123,21 @@ async function deleteUser(id) {
 // -----------------------
 // DELETE BY ID
 // -----------------------
+// -----------------------
+// DELETE BY ID (usa a rota existente /deleteUser/:id)
+// -----------------------
 async function deleteById() {
   var idInput = document.getElementById("deleteById").value.trim();
   if (!idInput) return alert("PUT A VALID ID!");
+
+  // (opcional) valida formato de ObjectId para evitar 400 desnecessário
+  var isHex24 = /^[a-fA-F0-9]{24}$/.test(idInput);
+  if (!isHex24) return alert("INVALID ID FORMAT!");
+
   if (!confirm("DELETE USER WITH ID " + idInput + "?")) return;
 
-  await safeFetch(BASE_URL + "/api/deleteById", {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: idInput })
+  await safeFetch(BASE_URL + "/api/deleteUser/" + encodeURIComponent(idInput), {
+    method: 'DELETE'
   }, {
     onSuccess: function (data) {
       alert(data && data.message ? data.message : "USER DELETED BY ID!");
