@@ -49,22 +49,6 @@ process.on("unhandledRejection", (err) => {
 // DB connection and server bootstrap
 (async () => {
 	try {
-
-
-		// --- SNAPSHOT DE AMBIENTE (não vaza segredo) ---
-		const visible = Object.fromEntries(
-			Object.entries(process.env)
-				.filter(([k]) => /USE_LOCAL_DB|ATLAS_MONGO_URI|MONGO_URL|MONGODB_URI|DATABASE_URL|NODE_ENV/i.test(k))
-				.map(([k, v]) => [k, k.includes("MONGO") ? "(set)" : v])
-		);
-		console.log("🔎 ENV SNAPSHOT:", visible);
-		// -----------------------------------------------
-		(function envSnapshot() {
-			const keys = ["USE_LOCAL_DB", "ATLAS_MONGO_URI", "MONGO_URL", "MONGODB_URI", "DATABASE_URL", "NODE_ENV"];
-			const out = Object.fromEntries(keys.map(k => [k, process.env[k] ? (k.includes("MONGO") ? "(set)" : process.env[k]) : "(missing)"]));
-			console.log("🔎 ENV SNAPSHOT:", out);
-		})();
-
 		await connectDB();
 		logInfo("✅ Connected to MongoDB");
 		await beep();

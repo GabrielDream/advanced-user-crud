@@ -46,8 +46,6 @@ function pickMongoUri() {
 	return { uri: atlas, label: "ATLAS" };
 }
 
-
-
 async function connectDB() {
 	const { uri, label } = pickMongoUri();
 
