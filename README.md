@@ -10,12 +10,12 @@
 * 🔹 Full test coverage with Jest + Supertest
 * 🔹 Solid stack: **Node.js + Express + MongoDB (Mongoose)**
 
-🔗 **Live API (base):** `https://advanced-user-crud.onrender.com/api`
+🔗 **Live API (base):** `https://advanced-user-crud.onrender.com/`
 🔗 **Repository:** [https://github.com/GabrielDream/advanced-user-crud](https://github.com/GabrielDream/advanced-user-crud)
 
 ---
 
-## 📦 Technologies and Tools Used
+## 📦 Technologies, Library and Tools Used
 
 * 🧰 Node.js
 * 🚏 Express
