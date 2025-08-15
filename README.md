@@ -1,298 +1,146 @@
-+ Advanced User CRUD with Custom Validation and Automated Testing
-	This project was built to showcase strong backend skills using:
+# 🧠 Advanced User CRUD with Custom Validation and Automated Testing
 
-	Clean code and modular structure
+🔎 **Purpose:** Showcase strong backend skills with a clean, production‑ready Node.js API.
 
-	Manual, rule-driven validation (Joi intentionally not used)
+✅ Highlights:
 
-	Custom error handling using AppError and specialized middlewares
+* 🔹 Clean code & modular structure
+* 🔹 Manual, rule‑driven validation *(no Joi)*
+* 🔹 Custom error handling with `AppError` + global `errorHandler`
+* 🔹 Full test coverage with Jest + Supertest
+* 🔹 Solid stack: **Node.js + Express + MongoDB (Mongoose)**
 
-	Full test coverage using Jest + Supertest
+🔗 **Live API (base):** `https://advanced-user-crud.onrender.com/api`
+🔗 **Repository:** [https://github.com/GabrielDream/advanced-user-crud](https://github.com/GabrielDream/advanced-user-crud)
 
-	Solid tech stack: Node.js + Express + MongoDB (Mongoose)
+---
 
-	📦 Technologies and Tools Used
-	Node.js
+## 📦 Technologies and Tools Used
 
-	Express
+* 🧰 Node.js
+* 🚏 Express
+* 🗄️ MongoDB + Mongoose
+* 🧩 Custom Middlewares:
 
-	MongoDB + Mongoose
+  * ⚙️ `res.success`
+  * 🚨 `AppError` class
+  * 🛡️ Global `errorHandler`
+* 🧪 Jest + Supertest
+* 🔐 dotenv
+* 🎨 chalk (styled logging)
+* 🧼 `sanitizeUserInput` (security utility)
+* 📨 Postman (manual tests)
+* ✅ Linter
 
-	Custom Middlewares:
+---
 
-	res.success
+## 📂 API Routes (base path: `/api`)
 
-	AppError class
+| Method | Route                | Description                         |
+| ------ | -------------------- | ----------------------------------- |
+| GET    | `/checkEmail/:email` | Check if email is already in use    |
+| POST   | `/register`          | Register a new user with validation |
+| GET    | `/checkUsers`        | List all users                      |
+| DELETE | `/deleteUser/:id`    | Delete user by ID                   |
+| PUT    | `/updateUser/:id`    | Update user fields                  |
 
-	Global errorHandler
+---
 
-	Advanced manual validations (Joi was intentionally not used)
+## 🧪 Automated Testing
 
-	Jest + Supertest
+* 🔎 Coverage includes:
 
-	dotenv
+  * ❌ Malformed ID
+  * ⚠️ Invalid inputs
+  * 🔁 Duplicate emails
+  * 🗒️ No data change
+  * 🔑 Weak passwords
+* 🎯 Each test asserts specific error/success messages for precision.
 
-	chalk (for styled logging)
+---
 
-	sanitizeUserInput (security utility)
+## ❗ Why Manual Validation Instead of Joi?
 
-	Postman (for manual tests and informal docs)
+* 🎛️ Total control over logic, flow, and messaging
+* 🔌 Seamless fit with custom error structures (`AppError`)
+* 🛡️ Useful for restricted environments (fintech, medical, security)
+* 🧠 Demonstrates defensive backend programming
 
-	Linter
+> “I know how to use Joi, but in this project I chose manual validation to guarantee full control over business rules and error flow.”
 
-	📂 API Routes (base path: /api)
-	Method	Route	Description
-	GET	/checkEmail/:email	Check if email is already in use
-	POST	/add	Register a new user with validation
-	GET	/checkUsers	List all users
-	DELETE	/deleteUser/:id	Delete user by ID
-	PUT	/updateUser/:id	Update user fields
+---
 
-	🧪 Automated Testing
-	All routes tested with Jest + Supertest.
-	Full coverage of success and error scenarios:
+## ▶️ How to Run This Project
 
-	Malformed ID
+### 1) 📡 Use the deployed API (no setup)
 
-	Invalid inputs
+* 🔗 **Base URL:** `https://advanced-user-crud.onrender.com/api`
+  *(First request can be slower due to cold start.)*
 
-	Duplicate emails
+**Quick examples**
 
-	No data change
+```bash
+# List users (deployed)
+curl https://advanced-user-crud.onrender.com/api/checkUsers
 
-	Weak passwords
+# Register a user (deployed)
+curl -X POST https://advanced-user-crud.onrender.com/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ana","age":27,"email":"ana@mail.com","password":"Aa!12345"}'
+```
 
-	Each test checks for specific messages, enforcing precise control.
+### 2) 🖥️ Run locally
 
-	❗ Why Manual Validation Instead of Joi?
-	This project intentionally avoids Joi to demonstrate:
+**Prereqs:** Node 18+ and npm. Run with **MongoDB Atlas** (no local DB) or **Local MongoDB**.
 
-	Total control over logic, flow, and messaging
+**2.1 – Clone & install**
 
-	Seamless integration with custom error structures (AppError)
-
-	Scenarios where external libraries are restricted (fintech, military, medical)
-
-	Mastery of backend logic and defensive programming
-
-	“I know how to use Joi, but in this project I chose manual validation to guarantee full control over business rules and error flow.”
-
-	▶️ How to Run This Project
-	bash
-	Copiar
-	Editar
-	# 1. Clone the repo
-	git clone https://github.com/your-user/your-repo.git
-
-	# 2. Install dependencies
-	npm install
-
-	# 3. Configure environment variables
-	MONGO_URL=mongodb://localhost/AdvancedCrud
-	PORT=3051
-
-	# 4. Start the server
-	npm start
-	# Server: http://localhost:3051/api
-	🧠 Final Notes
-	This project represents a clean and professional backend focused on logic, testing, and security.
-
-	“Validation isn’t just about accepting or rejecting input.
-	It’s about guiding, securing, and predicting behavior.”
-
-	Explore the source code to understand the architecture:
-	AppError, res.success, spyConsole, logging animations, and more.
-
-	Pull requests, forks and feedback are welcome. OSSS 💻🔥
-
-	The frontend README is available in /public/README.md.
-
-+ 🇧🇷 CRUD de Usuário Avançado com Validação Customizada e Testes Automatizados
-	Este projeto foi construído para demonstrar fortes habilidades em backend utilizando:
-
-	Código limpo e estrutura modular
-
-	Validação manual baseada em regras (Joi intencionalmente não utilizado)
-
-	Tratamento de erros customizado com AppError e middlewares personalizados
-
-	Cobertura total de testes com Jest + Supertest
-
-	Stack sólida com Node.js + Express + MongoDB (Mongoose)
-
-	📦 Tecnologias e Ferramentas Utilizadas
-	Node.js
-
-	Express
-
-	MongoDB + Mongoose
-
-	Middlewares personalizados:
-
-	res.success
-
-	Classe AppError
-
-	Middleware global errorHandler
-
-	Validações manuais avançadas
-
-	Testes com Jest + Supertest
-
-	dotenv
-
-	chalk (logs estilizados)
-
-	sanitizeUserInput (utilitário de segurança)
-
-	Postman
-
-	📂 Rotas da API (base: /api)
-	Método	Rota	Descrição
-	GET	/checkEmail/:email	Verifica se o e-mail já está em uso
-	POST	/add	Cadastra novo usuário com validação
-	GET	/checkUsers	Lista todos os usuários
-	DELETE	/deleteUser/:id	Deleta usuário por ID
-	PUT	/updateUser/:id	Atualiza campos do usuário
-
-	🧪 Testes Automatizados
-	Todas as rotas testadas com Jest + Supertest.
-	Cobertura completa de erros e sucessos:
-
-	ID inválido
-
-	Valores inválidos
-
-	Campos extras
-
-	Senhas fracas
-
-	Nenhuma alteração detectada
-
-	Cada teste verifica mensagens específicas — garantindo precisão.
-
-	❗ Por que não usar Joi?
-	A escolha de não usar Joi neste projeto foi estratégica:
-
-	Controle absoluto sobre lógica e mensagens
-
-	Integração total com AppError
-
-	Simulação de ambientes críticos (ex: fintechs, sistemas médicos, segurança)
-
-	Demonstração de domínio técnico da validação backend
-
-	“Eu sei usar o Joi, mas neste projeto escolhi a validação manual para garantir total controle sobre regras de negócio e mensagens de erro.”
-
-	▶️ Como Rodar o Projeto
-	bash
-	Copiar
-	Editar
-	# 1. Clone o repositório
-	git clone https://github.com/your-user/your-repo.git
-
-	# 2. Instale as dependências
-	npm install
-
-	# 3. Configure as variáveis de ambiente
-	MONGO_URL=mongodb://localhost/AdvancedCrud
-	PORT=3051
-
-	# 4. Inicie o servidor
-	npm start
-	# Servidor: http://localhost:3051/api
-
-+ 🇷🇺 Расширенный CRUD пользователей с пользовательской валидацией и тестированием
-	Этот проект создан для демонстрации навыков backend-разработки:
-
-	Чистый и модульный код
-
-	Ручная валидация без использования Joi (осознанный выбор)
-
-	Пользовательская обработка ошибок (AppError, middleware)
-
-	Полное покрытие тестами: Jest + Supertest
-
-	Надёжный стек: Node.js + Express + MongoDB (Mongoose)
-
-	📦 Используемые технологии
-	Node.js
-
-	Express
-
-	MongoDB + Mongoose
-
-	Пользовательские Middleware:
-
-	res.success
-
-	AppError
-
-	errorHandler
-
-	Ручная валидация (без Joi)
-
-	Jest + Supertest
-
-	dotenv
-
-	chalk
-
-	sanitizeUserInput
-
-	Postman
-
-	📂 API Маршруты (база: /api)
-	Метод	Роут	Описание
-	GET	/checkEmail/:email	Проверка существования email
-	POST	/add	Создание нового пользователя
-	GET	/checkUsers	Список всех пользователей
-	DELETE	/deleteUser/:id	Удаление по ID
-	PUT	/updateUser/:id	Обновление данных пользователя
-
-	🧪 Автотестирование
-	Все маршруты покрыты Jest + Supertest.
-	Полное покрытие ошибок и успехов:
-
-	Неверный формат ID
-
-	Дублирование email
-
-	Пустые поля
-
-	Слабые пароли
-
-	Отсутствие изменений
-
-	Каждое сообщение точно проверяется.
-
-	❗ Почему не Joi?
-	Проект осознанно не использует Joi:
-
-	Полный контроль логики и ошибок
-
-	Интеграция с AppError и кастомной архитектурой
-
-	Имитация сред с повышенной безопасностью (банковские, военные, медицинские)
-
-	Показ глубокого понимания backend-валидации
-
-	“Я умею пользоваться Joi, но в этом проекте выбрал ручную валидацию для абсолютного контроля над логикой.”
-
-	▶️ Как запустить проект
-	bash
-	Copiar
-	Editar
-	# 1. Клонировать репозиторий
-	git clone https://github.com/your-user/your-repo.git
-
-	# 2. Установить зависимости
-	npm install
-
-	# 3. Настроить переменные окружения
-	MONGO_URL=mongodb://localhost/AdvancedCrud
-	PORT=3051
-
-	# 4. Запустить сервер
-	npm start
-	# Сервер: http://localhost:3051/api
+```bash
+git clone https://github.com/GabrielDream/advanced-user-crud.git
+cd advanced-user-crud
+npm install
+```
+
+**2.2 – Run with MongoDB Atlas**
+
+```bash
+# macOS / Linux
+ATLAS_MONGO_URI="mongodb+srv://<USER>:<PASSWORD>@<CLUSTER>/<DB>?retryWrites=true&w=majority&appName=<APP>" \
+USE_LOCAL_DB=false \
+PORT=3051 \
+npm start
+```
+
+```powershell
+# Windows (PowerShell)
+$env:ATLAS_MONGO_URI="mongodb+srv://<USER>:<PASSWORD>@<CLUSTER>/<DB>?retryWrites=true&w=majority&appName=<APP>";
+$env:USE_LOCAL_DB="false";
+$env:PORT="3051";
+npm start
+```
+
+**2.3 – Run with Local MongoDB** *(ensure MongoDB is running)*
+
+```bash
+# macOS / Linux
+USE_LOCAL_DB=true \
+LOCAL_MONGO_URI="mongodb://127.0.0.1:27017/AdvancedCrud" \
+PORT=3051 \
+npm start
+```
+
+```powershell
+# Windows (PowerShell)
+$env:USE_LOCAL_DB="true";
+$env:LOCAL_MONGO_URI="mongodb://127.0.0.1:27017/AdvancedCrud";
+$env:PORT="3051";
+npm start
+```
+
+* 🏠 **Local API base:** `http://localhost:3051/api`
+* 🛠️ **Render note:** do not set `PORT` on Render; it injects the port automatically.
+
+---
+
+🙌 Pull requests, forks and feedback are welcome. OSSS 💻🥷
+🪄 The frontend README is available in `/public/README.md`.

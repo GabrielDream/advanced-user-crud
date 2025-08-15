@@ -44,8 +44,6 @@ process.on("unhandledRejection", (err) => {
 	process.exit(1);
 });
 
-
-
 // DB connection and server bootstrap
 (async () => {
 	try {
