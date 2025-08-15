@@ -26,7 +26,7 @@
   * 🚨 `AppError` class
   * 🛡️ Global `errorHandler`
 * 🧪 Jest + Supertest
-* 🔐 dotenv
+* 🔐 dotenv/bcrypt
 * 🎨 chalk (styled logging)
 * 🧼 `sanitizeUserInput` (security utility)
 * 📨 Postman (manual tests)
