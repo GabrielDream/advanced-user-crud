@@ -4,7 +4,7 @@
     "es2021": true
   },
   "extends": "airbnb-base",
-  "plugins": ["import"],
+//  "plugins": ["import"], 
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"

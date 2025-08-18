@@ -5,8 +5,8 @@ const chalk = require('chalk');
 // Loggers:
 const label = {
 	info: chalk.greenBright('⚪  INFO: '),
-	// logs for errors:
 	debug: chalk.blueBright('🔵  DEBUG: '),
+	// logs for errors:
 	warn: chalk.yellowBright('🟡  WARNING: '),
 	error: chalk.redBright('🔴  ERROR: '),
 	// Logs for sucess:
